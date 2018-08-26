@@ -1,8 +1,9 @@
-UserController = require('../controllers/user-controller');
-ProjetController = require('../controllers/projet-controller');
-PlateformeController = require('../controllers/plateforme-controller');
-ReseauController = require('../controllers/reseau-controller');
-TraficController = require('../controllers/trafic-controller');
+const UserController = require('../controllers/user-controller');
+const ProjetController = require('../controllers/projet-controller');
+const PlateformeController = require('../controllers/plateforme-controller');
+const ReseauController = require('../controllers/reseau-controller');
+const TraficController = require('../controllers/trafic-controller');
+const ErrorController = require('../controllers/ErrorController');
 const zlib = require('zlib');
 
 const decompressData = (req, res, next) => {
@@ -28,6 +29,13 @@ module.exports = server => {
   server.get('/user/:id', UserController.read);
   server.post('/user', UserController.create);
   server.delete('/user', UserController.delete);
+  
+  server.post('/user/login', UserController.login);
+  server.post('/user/checkLogin', UserController.checkLogin);
+  
+
+
+
 
   //Projet
   server.get('/projets', ProjetController.readAll);
@@ -53,4 +61,6 @@ module.exports = server => {
   server.get('/trafic/:id', TraficController.read);
   server.post('/trafic', TraficController.create);
   server.delete('/trafic', TraficController.delete);
+
+  server.get('/errors', ErrorController.all);
 };

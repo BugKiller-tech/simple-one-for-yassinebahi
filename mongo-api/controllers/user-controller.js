@@ -69,5 +69,32 @@ module.exports = {
     ]).then(result => {
       res.send(result);
     });
+  },
+
+
+
+  login: async (req, res) => {
+    if (!req.body.name) { return res.status(400).json({ errors: 'Please provide the name' }) }
+    if (!req.body.password) { return res.status(400).json({ errors: 'Please provide the password' }) }
+
+    try {
+      const user = await User.findOne({ name: req.body.name, password: req.body.password }).lean();
+      let user1 = Object.assign({}, user);
+      delete user1.password;
+      if (user) {
+        req.session.user = user
+        return res.json({ message: 'Successfully logged in', user: user1 })
+      } else {
+        return res.status(400).json({ errors: 'Invalid credential' })
+      }
+    } catch (err) {
+      return res.status(400).json({ errors: 'Something went wrong!' })      
+    }
+  },
+  checkLogin: async(req, res) => {
+    if (req.session.user) {
+      return res.json({message: 'logged in status', username: req.session.user.name})
+    }
+    return res.status(400).json({message: 'not logged in status'})
   }
 };

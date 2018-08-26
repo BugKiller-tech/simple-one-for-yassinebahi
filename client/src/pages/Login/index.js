@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Header from '../../components/client/Header';
+import Header from '../../components/Header';
 import {withStyles,
   Paper, Typography,
   TextField, InputAdornment,
@@ -34,7 +34,7 @@ const styles = theme => ({
 class Login extends Component {
 
   state = {
-    email: '',
+    name: '',
     password: '',
 
     snackBarOpen: false,
@@ -47,20 +47,19 @@ class Login extends Component {
     })    
   }
   onSubmit = () => {
-    if (this.state.email == '') { this.setState({ snackBarOpen: true, snackbarMessage: 'Please input the email' });  return;}
-    if (!validator.isEmail(this.state.email)) { this.setState({ snackBarOpen: true, snackbarMessage: 'Please input the valid email' });  return;}
+    if (this.state.name == '') { this.setState({ snackBarOpen: true, snackbarMessage: 'Please input the name' });  return;}
     if (this.state.password == '') { this.setState({ snackBarOpen: true, snackbarMessage: 'Please input the password' });  return;}
     Api.signIn({
-      email: this.state.email,
+      name: this.state.name,
       password: this.state.password,
     })
     .then(res => {
       this.setState({ snackBarOpen: true, snackbarMessage: 'Successfully logged In!' });
       this.props.userLogin(res.data.user);
-      this.props.history.push('/');
+      this.props.history.push('/dashboard');
     })
     .catch(err => {
-      this.setState({ snackBarOpen: true, snackbarMessage: err.response.data.message });
+      this.setState({ snackBarOpen: true, snackbarMessage: err.response.data.errors });
     })
   }
 
@@ -86,11 +85,11 @@ class Login extends Component {
               Login
             </Typography>
             <TextField 
-              type="email"
-              fullWidth={true} name="email"
-              label="email"
-              value={this.state.email}
-              onChange={this.handleChange('email')}
+              type="text"
+              fullWidth={true} name="name"
+              label="name"
+              value={this.state.name}
+              onChange={this.handleChange('name')}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">

@@ -3,6 +3,7 @@ import { Router, Route, BrowserRouter, Switch } from 'react-router-dom';
 
 import Login from './Login';
 import MainPage from './MainPage';
+import DashboardMain from './DashboardMain';
 
 class Routes extends Component {
   render () {
@@ -10,6 +11,9 @@ class Routes extends Component {
       <BrowserRouter>
         <Switch>
           <Route path='/login' component={Login} />
+          <Route path='/dashboard' component={DashboardMain} />
+
+
 
           <Route path='/' component={MainPage} />
           {/* <Route path='/' component={MainPage} /> */}

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { withRouter }  from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { 
   AppBar, Toolbar, IconButton, Typography, Button, Badge,
 } from '@material-ui/core';
-import { ShoppingCart, Info, Comment, AddShoppingCart } from '@material-ui/icons';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -45,12 +45,12 @@ class Header extends Component {
 
   onLogout = () => {
     this.props.userLogout();
+    this.props.history.push('/');
   }
 
   render() {
-    const { classes, user, cartProducts } = this.props;
+    const { classes, user } = this.props;
     let badgeCount = 0;
-    cartProducts.map(item => { badgeCount += item['count'] })
     
     return (
       <div className={classes.root}>
@@ -66,7 +66,7 @@ class Header extends Component {
               <Button color="inherit" component={NavLink} to="/">Home</Button>
               { !user && <Button color="inherit" component={NavLink} to="/login">Sign In</Button> }
               { user && <Button color="inherit" onClick={this.onLogout}>Sign Out</Button>}
-              { user && user.isAdmin == true && <Button color="inherit" component={NavLink} to="/dashboard">Goto Admin</Button>}
+              { user && <Button color="inherit" component={NavLink} to="/dashboard">Dashboard</Button>}
 
             </div>
           </Toolbar>
@@ -82,11 +82,10 @@ class Header extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     user: state.auth.user,
-    cartProducts: state.cart.products
   }
 }
 
 export default connect(mapStateToProps, {
   userLogout
 })
-(withStyles(styles)(Header));
+( withRouter(withStyles(styles)(Header)) );

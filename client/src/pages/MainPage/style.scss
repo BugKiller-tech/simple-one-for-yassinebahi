@@ -3,4 +3,16 @@
   background: url('../../imgs/bg1.jpeg');
   background-size: cover;
   background-position: center;
+
+
+  .centered-welcome {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 30px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background: rgba(134, 22, 145, 0.473);
+  }
 }

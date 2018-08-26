@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { purple, green  } from '@material-ui/core/colors';
+import { purple, green, lightBlue  } from '@material-ui/core/colors';
 import { Provider } from 'react-redux';
 
 import Routes from './pages/Routes';
